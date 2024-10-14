@@ -1,0 +1,133 @@
+﻿@using SIProject.Models.Entreprises.Commerce
+@using SIProject.Models.Structures.Commerce
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idEse = Context.Session.GetString("idEntreprise") ?? "";
+    StructProformaEnvoie spe = new StructProformaEnvoie(idEse);
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light"></span> Envoie de proforma</h4>
+    <div class="col-xxl">
+        <div class="card mb-4">
+            <div class="card-body">
+                <form asp-controller="Commerce" asp-action="SendProforma" method="POST">
+                    <input type="hidden" name="idEse" value="@idEse"/>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Article</label>
+                        <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                                <span id="basic-icon-default-fullname2" class="input-group-text">
+                                    <i class="bx bx-box"></i>
+                                </span>
+                                <select id="articleChoisit" name="idArticle" class="form-control">
+                                    @foreach (Article article in spe.articles)
+                                    {
+                                        <option value="@article.Id">@article.Nom</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Fournisseur</label>
+                        <div class="col-sm-10">
+                            <div style="display: grid; grid-template-columns: 49% 49%; grid-gap: 2%;">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-user"></i>
+                                    </span>
+                                    <input type="text" name="nomFournisseur" value="Sanda Raz" class="form-control" id="basic-icon-default-fullname" placeholder="Nom compte fournisseur" aria-label="Nom compte fournisseur" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bxl-gmail"></i>
+                                    </span>
+                                    <input type="email" name="mailFournisseur" value="25sandanirina@gmail.com" class="form-control" id="basic-icon-default-fullname" placeholder="fournisseur@gmail.com" aria-label="Email du fournisseur" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Client</label>
+                        <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                                <span id="basic-icon-default-fullname2" class="input-group-text">
+                                    <i class="bx bx-user"></i>
+                                </span>
+                                <input type="email" name="mailClient" value="robbygreg25@gmail.com" class="form-control" id="basic-icon-default-fullname" placeholder="client@gmail.com" aria-label="Email du client" aria-describedby="basic-icon-default-fullname2" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Stock</label>
+                        <div class="col-sm-10">
+                            <div style="display: grid; grid-template-columns: 32% 32% 32%; grid-gap: 2%;">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="number" step="0.5" name="stockPossession" class="form-control" id="basic-icon-default-fullname" placeholder="Quantité" aria-label="Quantité" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="number" step="0.5" name="prixUnitaire" class="form-control" id="basic-icon-default-fullname" placeholder="Prix unitaire article" aria-label="Prix unitaire article" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-number"></i>
+                                    </span>
+                                    <select id="unitesArticle" name="idUnite" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Emission et Expiration</label>
+                        <div class="col-sm-10">
+                            <div style="display: grid; grid-template-columns: 49% 49%; grid-gap: 2%;">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="date" name="dateEmission" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-label="" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="date" name="dateExpiration" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-label="" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (ViewBag.infoNonComplet != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <strong>Erreur: </strong> @ViewBag.infoNonComplet
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="row justify-content-end">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/js/commerce.js"></script>

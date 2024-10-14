@@ -1,0 +1,152 @@
+﻿@using SIProject.Models.Entreprises
+@using SIProject.Models.Structures
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idEse = Context.Session.GetString("idEntreprise") ?? "";
+    string jsonEse = Context.Session.GetString("Entreprise") ?? "";
+
+    StructEmpHome seh = new StructEmpHome(jsonEse);
+}
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <form asp-controller="Emp" asp-action="SaveEmp" method="POST" enctype="multipart/form-data">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Formulaire/</span> Enregistrement d'un employé</h4>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card mb-4">
+                    <h5 class="card-header">Departement et Poste</h5>
+                    <div class="card-body demo-vertical-spacing demo-only-element">
+                        <div class="input-group">
+                            <select name="idDept" class="form-select" id="inputGroupDept">
+                                <option selected="" disabled>Departement...</option>
+                            @foreach(Dept dept in seh.depts){
+                                <option value="@dept.Id">@dept.Nom</option>       
+                            }
+                            </select>
+                            <label class="input-group-text" for="inputGroupDept">Options</label>
+                        </div>
+                        <div class="input-group">
+                            <select name="idPoste" class="form-select" id="inputGroupPoste">
+                                <option selected="" disabled>Poste...</option>
+                            </select>
+                            <label class="input-group-text" for="inputGroupPoste">Options</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <h5 class="card-header">Photo de profil</h5>
+                    <div class="card-body demo-vertical-spacing demo-only-element">
+                        <div class="input-group ">
+                            <span id="basic-icon-default-fullname2" class="input-group-text">
+                                <i class="bx bx-image"></i>
+                            </span>
+                            <input name="photo" type="file" accept="image/*" class="form-control" id="inputPhotoProfil">
+                            <label class="input-group-text" for="inputPhotoProfil">Importer</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+                @if(ViewData["EmptyFieldError"] != null){
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        Erreur: un ou plusieurs valeurs sont vides
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+            </div>
+            <div class="col-md-7">
+                <div class="card mb-4">
+
+                    <h5 class="card-header">Informations personnel</h5>
+                    <div class="card-body demo-vertical-spacing demo-only-element">
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Nom</label>
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" name="nom" class="form-control" id="basic-icon-default-fullname" placeholder="Nom" aria-label="nom" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Prénoms</label>
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" name="prenom" class="form-control" id="basic-icon-default-fullname" placeholder="Prénoms" aria-label="prenoms" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Naissance</label>
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-calendar"></i>
+                                    </span>
+                                    <input type="date" name="datenaissance" class="form-control" id="basic-icon-default-fullname" placeholder="Date de Naissance" aria-label="service ou departement" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Genre</label>
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    <select name="genre" class="form-select" id="inputGroupPoste">
+                                        <option value="M">Masculin</option>
+                                        <option value="F">Féminin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Adresse</label>
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-home"></i>
+                                    </span>
+                                    <input type="text" name="adresse" class="form-control" id="basic-icon-default-fullname" placeholder="Adresse" aria-label="service ou departement" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Email</label>
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-envelope"></i>
+                                    </span>
+                                    <input type="email" name="email" class="form-control" id="basic-icon-default-fullname" placeholder="Adresse mail" aria-label="service ou departement" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Contact</label>
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-phone"></i>
+                                    </span>
+                                    <input type="text" name="contact" class="form-control" id="basic-icon-default-fullname" placeholder="Numéro de téléphone" aria-label="service ou departement" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script defer src="~/js/emp.js"></script>

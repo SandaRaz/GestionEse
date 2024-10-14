@@ -1,0 +1,105 @@
+﻿@using SIProject.Models.Entreprises.Immobilisation
+@using SIProject.Models.Structures.Immobilisation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idCategorieImmo = Context.Session.GetString("idCategorieImmo") ?? "";
+
+    string idPvReception = ViewBag.idPvReception;
+
+    Object erreur = ViewBag.erreurInsertion;
+    bool erreurInsertion = false;
+    if(erreur != null)
+    {
+        erreurInsertion = true;
+    }
+
+    List<Amortissement> amortissements = ViewBag.amortissementLineaires;
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <a href="@Url.Action("Amortissement", "Immobilisation")" class="btn btn-secondary">
+        <span class="tf-icons bx bx-arrow-back me-1"></span> Retour
+    </a>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6 col-md-6 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-4">Amortissement Lineaire</h5>
+                    
+                    <form asp-controller="Immobilisation" asp-action="GetAmortLineaire" method="POST">
+                        <input type="hidden" name="idPvReception" value="@idPvReception"/>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="basic-icon-default-fullname">Amortissement annuel</label>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="number" step="0.1" name="annuiteAmortissement" class="form-control" id="basic-icon-default-fullname" placeholder="annuité d'amortissement'" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 justify-content-end">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-primary">Voir</button>
+                            </div>
+                        </div>
+                        @if (erreurInsertion)
+                        {
+                            <div class="row justify-content-end">
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        Erreur lors de l'insertion
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (amortissements != null)
+    {
+        <hr />
+        <div class="row mb-3">
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                <h3> - UTILISATEUR ACTUEL - </h3>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Annee</th>
+                                    <th>VncDebutExercice</th>
+                                    <th>Annuite d'amortissement</th>
+                                    <th>Cumul Amortissement</th>
+                                    <th>VncFinExercice</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                @foreach(Amortissement amort in amortissements){
+                                    <tr>
+                                        <td>@amort.Annee</td>
+                                        <td>@amort.VncDebutExercice</td>
+                                        <td>@amort.AmortissementAnnuel</td>
+                                        <td>@amort.CumulAmortissement</td>
+                                        <td>@amort.VncFinExercice</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

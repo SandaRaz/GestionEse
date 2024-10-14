@@ -1,0 +1,70 @@
+﻿@using SIProject.Models.Entreprises.Immobilisation
+@using SIProject.Models.Structures.Immobilisation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idCategorieImmo = Context.Session.GetString("idCategorieImmo") ?? "";
+    StructImmobilier sc = new StructImmobilier(idCategorieImmo);
+
+    CategorieImmo categorie = sc.categorieImmo;
+}
+
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <a asp-controller="Immobilisation" asp-action="QuitterCategorie" class="btn btn-secondary">
+            <span class="tf-icons bx bx-arrow-back me-1"></span> Retour
+        </a>
+        <hr />
+            <div class="text-center">
+                <h4 class="pb-1 mb-4">IMMOBILISATION: @categorie.Label</h4>
+            </div>
+        <hr />
+        <div class="row mb-12">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <a asp-controller="Immobilisation" asp-action="Achat">
+                    <div class="col-md ese-list-card">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Achat</h5>
+                                <p class="card-text">
+                                </p>
+                                <p class="card-text"><small class="text-muted"></small></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <a asp-controller="Immobilisation" asp-action="Suivie">
+                    <div class="col-md ese-list-card">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Suivie</h5>
+                                <p class="card-text">
+                                </p>
+                                <p class="card-text"><small class="text-muted"></small></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <a asp-controller="Immobilisation" asp-action="Amortissement">
+                    <div class="col-md ese-list-card">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Amortissement</h5>
+                                <p class="card-text">
+                                </p>
+                                <p class="card-text"><small class="text-muted"></small></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="content-backdrop fade"></div>
+    </div>
+</div>

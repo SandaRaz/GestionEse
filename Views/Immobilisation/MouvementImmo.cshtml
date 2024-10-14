@@ -1,0 +1,161 @@
+﻿@using SIProject.Models.Entreprises.Immobilisation
+@using SIProject.Models.Structures.Immobilisation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idCategorieImmo = Context.Session.GetString("idCategorieImmo") ?? "";
+
+    string idPvReception = ViewBag.idPvReception;
+
+    StructMouvementImmo smi = new StructMouvementImmo(idPvReception);
+    PvUtilisation? derniereUtilisation = smi.dernierUtilisation;
+
+    Object erreur = ViewBag.erreurInsertion;
+    bool erreurInsertion = false;
+    if(erreur != null)
+    {
+        erreurInsertion = true;
+    }
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <a href="@Url.Action("Suivie", "Immobilisation")" class="btn btn-secondary">
+        <span class="tf-icons bx bx-arrow-back me-1"></span> Retour
+    </a>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6 col-md-6 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-4">Changement d'utilisateur</h5>
+                    
+                    <form asp-controller="Immobilisation" asp-action="AjoutMvtUtilisation" method="POST">
+                        <input type="hidden" name="idPvReception" value="@idPvReception"/>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="basic-icon-default-fullname">Date changement</label>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-calendar"></i>
+                                    </span>
+                                    <input type="date" name="dateDebutUtilisation" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="basic-icon-default-fullname">Utilisateur</label>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" name="utilisateurActuel" class="form-control" id="basic-icon-default-fullname" placeholder="Utilisateur" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="basic-icon-default-fullname">Etat</label>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <select name="idEtat" class="form-select">
+                                        @foreach (EtatImmobilier etat in smi.etatImmobiliers)
+                                        {
+                                            <option value="@etat.Id">@etat.Etat</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 justify-content-end">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                            </div>
+                        </div>
+                        @if (erreurInsertion)
+                        {
+                            <div class="row justify-content-end">
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        Erreur lors de l'insertion
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (derniereUtilisation != null)
+    {
+        <hr />
+        <div class="row mb-3">
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                <h3> - UTILISATEUR ACTUEL - </h3>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Utilisateur</th>
+                                    <th>Depuis</th>
+                                    <th>Etat</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td>@derniereUtilisation.UtilisateurActuel</td>
+                                    <td>@derniereUtilisation.DateDebutUtilisation</td>
+                                    <td>@derniereUtilisation.Etat</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <hr />
+    <div class="row mb-3">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <h3> - LISTE PV D'UTILISATION - </h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>id PVutilisation</th>
+                                <th>Utilisateur</th>
+                                <th>Date</th>
+                                <th>Etat</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (PvUtilisation pvu in smi.pvUtilisations)
+                            {
+                                <tr>
+                                    <td>@pvu.Id</td>
+                                    <td>@pvu.UtilisateurActuel</td>
+                                    <td>@pvu.DateDebutUtilisation</td>
+                                    <td>@pvu.Etat</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

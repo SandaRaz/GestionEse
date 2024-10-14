@@ -1,0 +1,143 @@
+﻿@using SIProject.Models.Entreprises.Immobilisation
+@using SIProject.Models.Structures.Immobilisation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idCategorieImmo = Context.Session.GetString("idCategorieImmo") ?? "";
+
+    string idBonDeLivraison = ViewBag.idBonDeLivraison;
+
+    StructPvReceptionHome pvrh = new StructPvReceptionHome(idBonDeLivraison);
+
+    Object erreur = ViewBag.erreurInsertion;
+    bool erreurInsertion = false;
+    if(erreur != null)
+    {
+        erreurInsertion = true;
+    }
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <a href="@Url.Action("Achat", "Immobilisation")" class="btn btn-secondary">
+        <span class="tf-icons bx bx-arrow-back me-1"></span> Retour
+    </a>
+    <hr />
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-4">Enregistrement de PV de Reception</h5>
+                    
+                    <form asp-controller="Immobilisation" asp-action="AjoutPvReception" method="POST">
+                        <input type="hidden" name="idCatImmo" value="@idCategorieImmo"/>
+                        <input type="hidden" name="idImmobilier" value="@pvrh.immobilier.Id"/>
+                        <input type="hidden" name="idBonDeLivraison" value="@idBonDeLivraison"/>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Immobilier</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@pvrh.immobilier.Nom" name="" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Date de reception</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-calendar"></i>
+                                    </span>
+                                    <input type="date" name="dateReception" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Numero Compta</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="number" name="numeroCompta" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Marque</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" name="marque" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Modele</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" name="modele" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Descriptions</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <textarea name="descriptions" class="form-control" aria-label="Descriptions"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Etat</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <select name="idEtat" class="form-select">
+                                        @foreach(EtatImmobilier etat in pvrh.etatImmobiliers)
+                                        {
+                                            <option value="@etat.Id">@etat.Etat</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Recepteur</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" name="recepteur" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 justify-content-end">
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                            </div>
+                        </div>
+                        @if (erreurInsertion)
+                        {
+                            <div class="row justify-content-end">
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        Erreur lors de l'insertion
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

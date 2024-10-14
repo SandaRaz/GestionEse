@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "_GetStarted";
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <div class="row row-cols-1 row-cols-md-2 g-4 w-50" style="margin-top: 4%;">
+        <div class="col">
+            <a asp-area="" asp-controller="Entreprise" asp-action="AjoutForm">
+                <div class="card gscard">
+                    <div class="card-img-top gscard-img" id="ajout-img"></div>
+                    <div class="card-body">
+                    <h5 class="card-title">Ajouter un Entreprise</h5>
+                    <!-- <p class="card-text">content.</p> -->
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a asp-area="" asp-controller="Entreprise" asp-action="Liste">
+                <div class="card gscard">
+                    <div class="card-img-top gscard-img" id="liste-img"></div>
+                    <div class="card-body">
+                    <h5 class="card-title">Choisir un Entreprise</h5>
+                    <!-- <p class="card-text">content.</p> -->
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

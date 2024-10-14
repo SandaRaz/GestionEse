@@ -1,0 +1,121 @@
+﻿@using SIProject.Models.Structures.Immobilisation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idCategorieImmo = Context.Session.GetString("idCategorieImmo") ?? "";
+
+    string idPvReception = ViewBag.idPvReception;
+
+    StructPvReception spv = new StructPvReception(idPvReception);
+
+    Object erreur = ViewBag.erreurValidation;
+    bool erreurValidation = false;
+    if(erreur != null)
+    {
+        erreurValidation = true;
+    }
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <a href="@Url.Action("Achat", "Immobilisation")" class="btn btn-secondary">
+        <span class="tf-icons bx bx-arrow-back me-1"></span> Retour
+    </a>
+    <hr />
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-4">Validation PV de Reception</h5>
+                    
+                    <form asp-controller="Immobilisation" asp-action="ValiderPvReception" method="POST">
+                        <input type="hidden" name="idPvReception" value="@idPvReception" />
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Immobilier</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@spv.immobilier.Nom" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Date de reception</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@spv.pvReception.DateReception" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Numero Compta</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@spv.pvReception.NumeroCompta" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Marque</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@spv.pvReception.Marque" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Modele</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@spv.pvReception.Modele" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Descriptions</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <textarea class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" disabled>@spv.pvReception.Descriptions</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Etat</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@spv.GetEtat(spv.pvReception.IdEtat).Etat" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Recepteur</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@spv.pvReception.Recepteur" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 justify-content-end">
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-primary">Valider</button>
+                            </div>
+                        </div>
+                        @if (erreurValidation)
+                        {
+                            <div class="row justify-content-end">
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        Erreur lors de la validation
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+﻿#ligneUnite{
+    display: grid;
+    grid-template-columns: 49% 49%;
+    grid-gap: 1%;
+}
+
+div:hover #plusunite {
+    color: white;
+    background-color: cyan;
+}
+
+.twocolsdiv {
+    display: grid;
+    grid-template-columns: 49% 49%;
+    grid-gap: 2%;
+}

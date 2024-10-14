@@ -1,0 +1,58 @@
+﻿a{
+    text-decoration: none;
+    color: black;
+}
+
+.gscard {
+    border-radius: 10px;
+    border: 0px solid black;
+    box-shadow: 0px 0px 3px grey,
+                0px 0px 10px lightgrey;
+    height: auto;
+}
+.gscard:hover {
+    box-shadow: 0px 0px 3px white, 0px 0px 10px blue;
+}
+    .gscard:hover #ajout-img {
+        background-image: url(../img/essentials/pencil.png);
+    }
+    .gscard:hover #liste-img {
+        background-image: url(../img/essentials/document.png);
+    }
+
+.gscard-img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 250px;
+}
+
+#ajout-img {
+    border: 1px hidden black;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(../img/essentials/penciline.png);
+}
+
+#liste-img {
+    border: 1px hidden black;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-image: url(../img/essentials/documentline.png);
+}
+
+.ese-list-card {
+    border-radius: 7px;
+}
+.ese-list-card:hover {
+    box-shadow: 0px 0px 3px white, 0px 0px 10px blue;
+}
+
+.ese-list-card-2 {
+    border-radius: 7px;
+}
+
+.ese-list-logo {
+    height: 100%;
+}

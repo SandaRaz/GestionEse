@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using SIProject.Models.Entreprises;
+@{
+    @model List<Entreprise>;
+}
+
+
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h5 class="pb-1 mb-4">Liste des Entreprises</h5>
+        <div class="row mb-5" style="display: grid; grid-template-columns: 50% 50%;">
+            @foreach(Entreprise ese in Model)
+            {
+                <a href="@Url.Action("LoginHome","Entreprise", new { idEse=@ese.Id})">
+                    <div class="col-md ese-list-card">
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img class="card-img card-img-left ese-list-logo" src="~/img/uploads/entreprise/@ese.LogoName" alt="Card image" />
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@ese.Nom</h5>
+                                        <p class="card-text">
+                                            @ese.Objet, @ese.Siege.
+                                        </p>
+                                        <p class="card-text"><small class="text-muted">Crée le @ese.DateCreation</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+        <div class="content-backdrop fade"></div>
+    </div>
+</div>

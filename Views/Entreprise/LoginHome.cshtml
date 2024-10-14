@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using SIProject.Models.Entreprises;
+@using SIProject.Models.Structures
+@{
+    @model Entreprise;
+
+    StructLoginHome slh = new StructLoginHome(Model.Id);
+}
+
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <a asp-area="" asp-controller="Entreprise" asp-action="Liste"><div class="btn btn-secondary btn-sm">Retour</div></a>
+        <hr />
+        <h5 class="pb-1 mb-4">Login</h5>
+        <div class="row mb-5" style="display: grid; grid-template-columns: 50% 50%;">
+            <div class="col-md ese-list-card-2">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img class="card-img card-img-left ese-list-logo" src="~/img/uploads/entreprise/@Model.LogoName" alt="Card image" />
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@Model.Nom</h5>
+                                <p class="card-text">
+                                    @Model.Objet, @Model.Siege.
+                                </p>
+                                <p class="card-text"><small class="text-muted">Crée le @Model.DateCreation</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md ese-list-card-2">
+                <div class="card mb-3">
+                   <!-- Tsy fafana  --> 
+                </div>
+                <div class="card-body">
+                    <form id="formAuthentication" class="mb-3" asp-controller="Entreprise" asp-action="Login" method="POST">
+                        <input type="hidden" name="idEse" value="@Model.Id" />
+                        
+                        <div class="mb-3 form-password-toggle" style="display: grid; grid-template-columns: 49% 49%; grid-gap: 2%;">
+                            <label class="form-label" for="mdp"><b>Département</b></label>
+                            <label class="form-label" for="mdp"><b>Poste</b></label>
+                            <div class="input-group input-group-merge">
+                                <select id="idDeptChoisit" name="idDept" class="form-control">
+                                    @foreach (Dept dept in slh.depts)
+                                    {
+                                        <option value="@dept.Id">@dept.Nom</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="input-group input-group-merge">
+                                <select id="idPostChoix" name="idPoste" class="form-control"></select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="mdp"><b>Mot de passe</b></label>
+                            <div class="input-group input-group-merge">
+                                <input type="password" id="mdp" class="form-control" name="mdp"
+                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                    aria-describedby="password" />
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary d-grid w-100" type="submit">Se connecter</button>
+                    </form>
+                    @if(@ViewData["LoginError"] != null){
+                        <p style="color: red;" class="text-center">Mot de passe incorrect</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="content-backdrop fade"></div>
+    </div>
+</div>
+
+<script defer type="text/javascript" src="~/js/entreprise.js"></script>

@@ -1,0 +1,121 @@
+﻿@using SIProject.Models.Entreprises.Immobilisation
+@using SIProject.Models.Structures.Immobilisation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idCategorieImmo = Context.Session.GetString("idCategorieImmo") ?? "";
+    string idEse = Context.Session.GetString("idEntreprise") ?? "";
+
+    StructSuivie ss = new StructSuivie(idCategorieImmo);
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <a href="@Url.Action("Categories", "Immobilisation", new { idCategorieImmo = idCategorieImmo, nomPage = ss.categorieImmo.Nom })" class="btn btn-secondary">
+        <span class="tf-icons bx bx-arrow-back me-1"></span> Retour
+    </a>
+    <hr />
+    <div class="row mb-3">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <h3> - LISTE IMMOBILISATION (PAS ENCORE UTILISEE) - </h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id pv</th>
+                                <th>Immobilier</th>
+                                <th>Marque</th>
+                                <th>Modeles</th>
+                                <th>Date de reception</th>
+                                <th>Etat</th>
+                                <th>Recepteur</th>
+                                <th>Statut</th>
+                                <th>PVU</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (DetailImmobilier immo in ss.immobiliers)
+                            {
+                                <tr>
+                                    <td>@immo.Id</td>
+                                    <td>@immo.Immobilier</td>
+                                    <td>@immo.Marque</td>
+                                    <td>@immo.Modele</td>
+                                    <td>@immo.dateReception</td>
+                                    <td>@immo.Etat</td>
+                                    <td>@immo.Recepteur</td>
+                                    <td>@immo.Statut</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="@Url.Action("PremiereUtilisation", "Immobilisation", new{ idPvReception = @immo.Id })" class="btn-group btn-info">
+                                                    <div class="mx-2">Utilisation</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row mb-3">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <h3> - LISTE IMMOBILISATION (DEJA UTILISEE) - </h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id pv</th>
+                                <th>Immobilier</th>
+                                <th>Marque</th>
+                                <th>Modeles</th>
+                                <th>Date de reception</th>
+                                <th>Etat</th>
+                                <th>Recepteur</th>
+                                <th>Statut</th>
+                                <th>PVU</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (DetailImmobilier immo in ss.immobiliersUtilisees)
+                            {
+                                <tr>
+                                    <td>@immo.Id</td>
+                                    <td>@immo.Immobilier</td>
+                                    <td>@immo.Marque</td>
+                                    <td>@immo.Modele</td>
+                                    <td>@immo.dateReception</td>
+                                    <td>@immo.Etat</td>
+                                    <td>@immo.Recepteur</td>
+                                    <td>@immo.Statut</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="@Url.Action("MouvementImmo", "Immobilisation", new{ idPvReception = @immo.Id })" class="btn-group btn-warning">
+                                                    <div class="mx-2">Mouvement</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

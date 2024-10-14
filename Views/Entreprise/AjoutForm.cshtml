@@ -1,0 +1,100 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container">
+  <form id="formAuthentication" class="mb-3" asp-controller="Entreprise" asp-action="Ajouter" method="POST" enctype="multipart/form-data">
+      <div class="row justify-content-evenly">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom</label>
+                        <input
+                        type="text" class="form-control" id="nom" name="nom" placeholder="Nom de l'E/se" autofocus />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Email de l'E/se" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="objet" class="form-label">Objet</label>
+                        <input type="text" class="form-control" id="objet" name="objet" placeholder="Secteur d'activit&eacute;" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="siege" class="form-label">Si&egrave;ge</label>
+                        <input
+                        type="text" class="form-control" id="siege" name="siege" placeholder="Si&egrave;ge principal" autofocus />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="chef" class="form-label">Chef</label>
+                        <input type="text" class="form-control" id="chef" name="chef" placeholder="Nom du chef de l'E/se" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="nif" class="form-label">NIF</label>
+                        <input type="text" class="form-control" id="nif" name="nif" placeholder="Num&eacute;ro d'identification fiscale" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="numstat" class="form-label">Num Stat</label>
+                        <input type="text" class="form-control" id="numstat" name="numstat" placeholder="Num&eacute;ro statistique" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-control" id="status" name="status">
+                            <option selected disabled>Status de l'E/se</option>
+                            <option>SNC</option>
+                            <option>SARL</option>
+                            <option>SA</option>
+                            <option>SCA</option>
+                            <option>SEP</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="datecreaction" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="datecreaction" name="datecreaction" placeholder="" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="logo" class="form-label">Logo de l'Entreprise</label>
+                        <input type="file" accept="image/*" class="form-control" id="logo" name="logo" placeholder="" />
+                    </div>
+                    <div class="mb-3 form-password-toggle">
+                        <label class="form-label" for="mdp"><b>Mot de passe</b></label>
+                        <div class="input-group input-group-merge">
+                            <input type="password" id="mdp" class="form-control" name="mdp"
+                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                aria-describedby="password" />
+                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 form-password-toggle">
+                        <label class="form-label" for="confirmmdp"><b>Confirmer le mot de passe</b></label>
+                        <div class="input-group input-group-merge">
+                            <input type="password" id="confirmmdp" class="form-control" name="confirmmdp"
+                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                aria-describedby="password" />
+                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                        </div>
+                    </div>
+                    <br>
+                    <button class="btn btn-primary d-grid w-100" type="submit">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </form>
+</div>
+
+

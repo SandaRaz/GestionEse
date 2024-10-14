@@ -1,0 +1,480 @@
+﻿@using SIProject.Models.Entreprises.Commerce
+@using SIProject.Models.Entreprises.Immobilisation
+@using SIProject.Models.Structures.Immobilisation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idCategorieImmo = Context.Session.GetString("idCategorieImmo") ?? "";
+    string idEse = Context.Session.GetString("idEntreprise") ?? "";
+
+    StructImmobilier sc = new StructImmobilier(idCategorieImmo);
+
+    Object erreur = ViewBag.erreurInsertion;
+    bool erreurInsertion = false;
+    if(erreur != null)
+    {
+        erreurInsertion = true;
+    }
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <a href="@Url.Action("Categories", "Immobilisation", new { idCategorieImmo = sc.categorieImmo.Id, nomPage = sc.categorieImmo.Nom })" class="btn btn-secondary">
+        <span class="tf-icons bx bx-arrow-back me-1"></span> Retour
+    </a>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6 col-md-6 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-4">Ajout de type de @sc.categorieImmo.Label</h5>
+                    
+                    <form asp-controller="Immobilisation" asp-action="NouveauImmobilier" method="POST">
+                        <input type="hidden" name="idEse" value="@idEse"/>
+                        <input type="hidden" name="idCategorieImmo" value="@idCategorieImmo"/>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label" for="basic-icon-default-fullname">Immobilier</label>
+                            <div class="col-sm-9">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" name="nomImmobilisation" class="form-control" id="basic-icon-default-fullname" placeholder="Nom de l'immobilier" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 justify-content-end">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-primary">Inserer</button>
+                            </div>
+                        </div>
+                        @if (erreurInsertion)
+                        {
+                            <div class="row justify-content-end">
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        Erreur lors de l'insertion
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-4">Enregistrement de proformat</h5>
+                    
+                    <form asp-controller="Immobilisation" asp-action="AjoutProforma" method="POST">
+                        <input type="hidden" name="idEse" value="@idEse"/>
+                        <input type="hidden" name="idCategorieImmo" value="@idCategorieImmo"/>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Immobilier</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-menu"></i>
+                                    </span>
+                                    <select name="idImmobilier" class="form-control">
+                                        @foreach(Immobilier immobilier in sc.immobiliers)
+                                        {
+                                            <option value="@immobilier.Id">@immobilier.Nom</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Reference</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" name="reference" class="form-control" id="basic-icon-default-fullname" placeholder="reference" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Quantit&eacute;</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="number" name="quantite" class="form-control" id="basic-icon-default-fullname" placeholder="quantite" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Prix</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="number" name="prix" class="form-control" id="basic-icon-default-fullname" placeholder="ariary" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Date emission</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-calendar"></i>
+                                    </span>
+                                    <input type="date" name="dateEmission" class="form-control" id="basic-icon-default-fullname" placeholder="date emission" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Date expiration</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-calendar"></i>
+                                    </span>
+                                    <input type="date" name="dateExpiration" class="form-control" id="basic-icon-default-fullname" placeholder="date expiration" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Etat</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-menu"></i>
+                                    </span>
+                                    <select name="idEtat" class="form-control">
+                                        @foreach(EtatImmobilier etat in sc.etatImmobiliers)
+                                        {
+                                            <option value="@etat.Id">@etat.Etat</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Fournisseur</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-menu"></i>
+                                    </span>
+                                    <select name="idFournisseur" class="form-control">
+
+                                        @foreach(Fournisseur fournisseur in sc.fournisseurs)
+                                        {
+                                            <option value="@fournisseur.Id">@fournisseur.Nom</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Fournisseur specifique</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" name="fournisseur" class="form-control" id="basic-icon-default-fullname" placeholder="fournisseur" aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 justify-content-end">
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-primary">Inserer</button>
+                            </div>
+                        </div>
+                        @if (erreurInsertion)
+                        {
+                            <div class="row justify-content-end">
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        Erreur lors de l'insertion
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 text-center">
+            <h4> - Proforma en attente de validation - </h4>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id Immobilier</th>
+                                <th>Reference</th>
+                                <th>Prix</th>
+                                <th>Date emission</th>
+                                <th>Date expiration</th>
+                                <th>Fournisseur</th>
+                                <th>EXPORT</th>
+                                <th>VALIDER</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (ProformaImmo proforma in sc.proformaImmos)
+                            {
+                                <tr>
+                                    <td>@proforma.IdImmobilier</td>
+                                    <td>@proforma.Reference</td>
+                                    <td>@proforma.Prix Ar</td>
+                                    <td>@proforma.DateEmission</td>
+                                    <td>@proforma.DateExpiration</td>
+                                    <td>@proforma.Fournisseur</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="" class="btn-group btn-warning">
+                                                    <div class="mx-2">Exporter</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="@Url.Action("BDCHome", "Immobilisation", new{ idProformaImmo = @proforma.Id })" class="btn-group btn-info">
+                                                    <div class="mx-2">Valider</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 text-center">
+            <h4> -  BonDeCommande en attente de bon de livraison - </h4>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id BonDeCommande</th>
+                                <th>Prix HT</th>
+                                <th>tva</th>
+                                <th>Prix TTC</th>
+                                <th>Date commande</th>
+                                <th>Date livraison</th>
+                                <th>EXPORT</th>
+                                <th>BON DE LIVRAISON</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (BonDeCommande bdc in sc.bonDeCommandes)
+                            {
+                                <tr>
+                                    <td>@bdc.Id</td>
+                                    <td>@bdc.PrixHt</td>
+                                    <td>@bdc.Tva</td>
+                                    <td>@bdc.PrixTtc</td>
+                                    <td>@bdc.DateCommande</td>
+                                    <td>@bdc.DateLivraison</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="" class="btn-group btn-warning">
+                                                    <div class="mx-2">Exporter</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="@Url.Action("BDLHome", "Immobilisation", new{ idBonDeCommande = bdc.Id })" class="btn-group btn-info">
+                                                    <div class="mx-2">Ajouter</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <h4> -  BonDeLivraison en attente de pv de reception - </h4>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Net a payer</th>
+                                <th>Descriptions</th>
+                                <th>Observations</th>
+                                <th>Adresse</th>
+                                <th>Livreur</th>
+                                <th>Date de livraison</th>
+                                <th>EXPORT</th>
+                                <th>PV DE RECEPTION</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (BonDeLivraison bdl in sc.bonDeLivraisons)
+                            {
+                                <tr>
+                                    <td>@(bdl.Prix + bdl.Frais) Ar</td>
+                                    <td>@bdl.Descriptions</td>
+                                    <td>@bdl.Observations</td>
+                                    <td>@bdl.Adresse</td>
+                                    <td>@bdl.Livreur</td>
+                                    <td>@bdl.DateLivraison</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="" class="btn-group btn-warning">
+                                                    <div class="mx-2">Exporter</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="@Url.Action("PVReceptionHome", "Immobilisation", new{ idBonDeLivraison = bdl.Id })" class="btn-group btn-info">
+                                                    <div class="mx-2">Ajouter</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <h4> -  PV de reception en attente de validation - </h4>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id PVR</th>
+                                <th>Numero compta</th>
+                                <th>Date de reception</th>
+                                <th>Marque</th>
+                                <th>Modele</th>
+                                <th>Descriptions</th>
+                                <th>Etat</th>
+                                <th>Recepteur</th>
+                                <th>Validation</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (PvReception pvr in sc.pvReceptions)
+                            {
+                                <tr>
+                                    <th>@pvr.Id</th>
+                                    <th>@pvr.NumeroCompta</th>
+                                    <th>@pvr.DateReception</th>
+                                    <th>@pvr.Marque</th>
+                                    <th>@pvr.Modele</th>
+                                    <th>@pvr.Descriptions</th>
+                                    <th>@sc.GetEtat(pvr.IdEtat).Etat</th>
+                                    <th>@pvr.Recepteur</th>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="@Url.Action("PVRValidationPage", "Immobilisation", new{ idPvReception = pvr.Id })" class="btn-group btn-info">
+                                                    <div class="mx-2">Valider</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <h3> - LISTE IMMOBILISATION - </h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id pv</th>
+                                <th>Immobilier</th>
+                                <th>Marque</th>
+                                <th>Modeles</th>
+                                <th>Date de reception</th>
+                                <th>Etat</th>
+                                <th>Recepteur</th>
+                                <th>Fournisseur</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (DetailImmobilier immo in sc.immobiliersAPVR)
+                            {
+                                <tr>
+                                    <td>@immo.Id</td>
+                                    <td>@immo.Immobilier</td>
+                                    <td>@immo.Marque</td>
+                                    <td>@immo.Modele</td>
+                                    <td>@immo.dateReception</td>
+                                    <td>@immo.Etat</td>
+                                    <td>@immo.Recepteur</td>
+                                    <td>@immo.Fournisseur</td>
+                                    <td>@immo.Statut</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

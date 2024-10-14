@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Achat/</span> Achat de besoin des Departements</h4>
+    <div class="col-xxl">
+        <div class="card" mb-4>
+            <h5 class="card-header"></h5>
+            <div class="table-responsive text-nowrap">
+                <form id="BesoinArticleForm" method="POST" href="@Url.Action("AchatBesoin", "Commerce")">
+                    <table class="table">
+                        <thead>
+                            <tr id="achatBesoinEntete">
+                                <th>Article</th>
+                                <th>Quantité</th>
+                                <th>Informatique</th>
+                                <th>RH</th>
+                                <th>Sécurité</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            <tr>
+                                <td>
+                                    <select name="idArticle" class="form-control">
+                                        <option value="">Article</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input name="quantite" type="number" placeholder="quantité" />
+                                </td>
+                                <td>
+                                    <input name="idDept" type="hidden"/>
+                                    <input name="dept" type="number" placeholder="" />
+                                </td>
+                                <td>
+                                    <input name="idDept" type="hidden"/>
+                                    <input name="dept" type="number" placeholder="" />
+                                </td>
+                                <td>
+                                    <input name="idDept" type="hidden"/>
+                                    <input name="dept" type="number" placeholder="" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

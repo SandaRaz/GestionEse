@@ -1,0 +1,106 @@
+﻿@using SIProject.Models.Structures.Immobilisation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idCategorieImmo = Context.Session.GetString("idCategorieImmo") ?? "";
+
+    string idProformaImmo = ViewBag.idProformaImmo;
+
+    StructImmobilier sc = new StructImmobilier(idCategorieImmo, idProformaImmo);
+
+    Object erreur = ViewBag.erreurInsertion;
+    bool erreurInsertion = false;
+    if(erreur != null)
+    {
+        erreurInsertion = true;
+    }
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <a href="@Url.Action("Achat", "Immobilisation")" class="btn btn-secondary">
+        <span class="tf-icons bx bx-arrow-back me-1"></span> Retour
+    </a>
+    <hr />
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-4">Enregistrement de Bon de commande</h5>
+                    
+                    <form asp-controller="Immobilisation" asp-action="AjoutBDC" method="POST">
+                        <input type="hidden" name="idProformaImmo" value="@idProformaImmo"/>
+                        <input type="hidden" name="prixht" value="@sc.proformaImmo.Prix" />
+                        <input type="hidden" name="tva" value="@sc.proformaImmo.getTVA()" />
+                        <input type="hidden" name="prixttc" value="@sc.proformaImmo.getPrixTTC()" />
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Prix HT</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@sc.proformaImmo.Prix Ar" name="" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">TVA</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@sc.proformaImmo.getTVA() Ar" name="" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Prix TTC</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@sc.proformaImmo.getPrixTTC() Ar" name="" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Date commande</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-calendar"></i>
+                                    </span>
+                                    <input type="date" name="dateCommande" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Date livraison</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-calendar"></i>
+                                    </span>
+                                    <input type="date" name="dateLivraison" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 justify-content-end">
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-primary">Valider</button>
+                            </div>
+                        </div>
+                        @if (erreurInsertion)
+                        {
+                            <div class="row justify-content-end">
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        Erreur lors de l'insertion
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

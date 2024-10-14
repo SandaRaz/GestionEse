@@ -1,0 +1,150 @@
+﻿@using SIProject.Models.Structures.Immobilisation
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Home";
+    string idCategorieImmo = Context.Session.GetString("idCategorieImmo") ?? "";
+
+    string idBonDeCommande = ViewBag.idBonDeCommande;
+
+    StructImmobilier2 sc2 = new StructImmobilier2(idBonDeCommande);
+
+    Object erreur = ViewBag.erreurInsertion;
+    bool erreurInsertion = false;
+    if(erreur != null)
+    {
+        erreurInsertion = true;
+    }
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <a href="@Url.Action("Achat", "Immobilisation")" class="btn btn-secondary">
+        <span class="tf-icons bx bx-arrow-back me-1"></span> Retour
+    </a>
+    <hr />
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-4">Enregistrement de Bon de livraison</h5>
+                    
+                    <form asp-controller="Immobilisation" asp-action="AjoutBDL" method="POST">
+                        <input type="hidden" name="idCatImmo" value="@idCategorieImmo"/>
+                        <input type="hidden" name="idBonDeCommande" value="@idBonDeCommande"/>
+                        <input type="hidden" name="prix" value="@sc2.bonDeCommande.PrixTtc"/>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Quantite livr&eacute;e</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="number" name="quantiteLivree" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Prix</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" value="@sc2.bonDeCommande.PrixTtc Ar" name="" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Frais</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="number" name="frais" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Descriptions</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <textarea name="descriptions" class="form-control" aria-label="Descriptions"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Observations</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <textarea name="observations" class="form-control" aria-label="Observations"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Adresse</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" name="adresse" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Livreur</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" name="livreur" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Contact Livreur</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-pen"></i>
+                                    </span>
+                                    <input type="text" value="0341234567" name="contactLivreur" class="form-control" id="basic-icon-default-fullname" aria-describedby="basic-icon-default-fullname2"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="basic-icon-default-fullname">Date livraison</label>
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                        <i class="bx bx-calendar"></i>
+                                    </span>
+                                    <input type="date" name="dateLivraison" class="form-control" id="basic-icon-default-fullname" placeholder="" aria-describedby="basic-icon-default-fullname2" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 justify-content-end">
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                            </div>
+                        </div>
+                        @if (erreurInsertion)
+                        {
+                            <div class="row justify-content-end">
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        Erreur lors de l'insertion
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
